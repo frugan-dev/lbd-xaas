@@ -14,7 +14,7 @@
     },
     "scripts": {
         "gcp-build": [
-            "composer install"
+            "composer update --optimize-autoloader --classmap-authoritative --no-dev --no-interaction"
         ]
     }
 }
