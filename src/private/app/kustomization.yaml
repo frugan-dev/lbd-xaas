@@ -1,0 +1,15 @@
+#https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/configmapgenerator/
+# files: creates ConfigMaps/Secret with the names and contents of the given file
+# envs: creates ConfigMaps/Secret with key/value as data using key/value pairs from files
+# literals: creates ConfigMaps/Secret with key/value as data, directly specified using literals
+# files + annotations: creates ConfigMaps/Secret with annotation and label via options for that single ConfigMap
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+configMapGenerator:
+  - name: app-configmap
+    envs:
+      - .env
+secretGenerator:
+  - name: app-secret
+    files: # <--
+      - .env

@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	# Redirect Trailing Slashes
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+	#https://stackoverflow.com/a/22554024
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    #https://httpd.apache.org/docs/2.4/mod/mod_dir.html#fallbackresource
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^ index.php [QSA,L]
+</IfModule>

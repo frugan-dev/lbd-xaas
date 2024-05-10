@@ -1,0 +1,29 @@
+services:
+
+  apache:
+    container_name: apache
+    image: bitnami/apache:latest
+    networks:
+      - network
+    ports:
+      - 80:8080
+      - 443:8443
+    volumes:
+      - ${PWD}:/app
+      - ${PWD}/private/docker/apache/vhosts.conf:/vhosts/vhosts.conf:ro
+      - ${PWD}/private/docker/apache/certs:/certs
+
+  php-fpm:
+    container_name: php-fpm
+    image: bitnami/php-fpm:8.3
+    networks:
+      - network
+    volumes:
+      - ${PWD}:/app
+    command: "sh -c 'cd /app/private/app 
+      && composer config -g github-oauth.github.com ${GITHUB_TOKEN} 
+      && composer update
+      && php-fpm -F --pid /opt/bitnami/php/tmp/php-fpm.pid -y /opt/bitnami/php/etc/php-fpm.conf'"
+
+networks:
+  network:

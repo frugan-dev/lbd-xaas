@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.dist
+
+vendor/
+composer.lock
+
+src/public/app.yaml
+src/public/php.ini
+
+*.code-workspace

@@ -1,0 +1,16 @@
+services:
+
+  local:
+    build:
+      context: .
+      #dockerfile: Dockerfile.bitnami
+      #dockerfile: Dockerfile.google
+    ports:
+      - 8000:8000
+      - 8080:8080
+    volumes:
+      - ${PWD}/../src:/app
+      - ${PWD}/app.yaml:/app/public/app.yaml
+      - ${PWD}/php.ini:/app/public/php.ini
+    environment:
+      GITHUB_TOKEN: ${GITHUB_TOKEN}

@@ -1,0 +1,29 @@
+FROM gcr.io/google.com/cloudsdktool/google-cloud-cli:alpine as build
+
+FROM bitnami/php-fpm:8.2
+
+RUN install_packages \
+        ca-certificates \
+        curl \
+        gnupg2 \
+        python3 \
+        unzip \
+    ;
+
+COPY --from=build /google-cloud-sdk /root/google-cloud-sdk
+
+ENV PATH="/root/google-cloud-sdk/bin:${PATH}"
+
+RUN gcloud components install app-engine-python
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+EXPOSE 8080 8000
+
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+#https://stackoverflow.com/a/40454758/3929620
+#https://stackoverflow.com/a/42501460/3929620
+CMD python3 $(which dev_appserver.py) --host=0.0.0.0 --admin_host=0.0.0.0 --php_executable_path=$(which php) --php_composer_path=$(which composer) --enable_console --dev_appserver_log_level=debug public/app.yaml

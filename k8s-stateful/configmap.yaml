@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap
+data:
+  vhosts.conf: |
+    <VirtualHost *:8080>
+    	ServerAdmin webmaster@localhost
+    	DocumentRoot "/app/public"
+    	ServerName localhost
+
+    	DirectoryIndex index.html index.htm index.php
+
+    	<Directory "/app/public">
+    		Options Indexes FollowSymLinks
+    		AllowOverride All
+    		Require all granted
+    	</Directory>
+
+    	<FilesMatch \.php$>
+          SetHandler proxy:fcgi://php-fpm-service:9000
+      </FilesMatch>
+    </VirtualHost>
+  .htaccess: |
+    <IfModule mod_rewrite.c>
+    	RewriteEngine On
+
+    	RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    	RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    	RewriteCond %{REQUEST_FILENAME} !-f
+    	RewriteCond %{REQUEST_FILENAME} !-d
+    	RewriteRule ^ index.php [QSA,L]
+    </IfModule>

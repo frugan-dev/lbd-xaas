@@ -1,0 +1,9 @@
+src/private/
+src/private/docker/
+!src/private/app/
+
+*.code-workspace
+
+**/.env
+**/.env.*
+!**/.env.dist

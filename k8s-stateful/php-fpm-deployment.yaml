@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-fpm
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: php-fpm
+  template:
+    metadata:
+      labels:
+        app: php-fpm
+    spec:
+      initContainers:
+        - name: init-php-fpm
+          image: registry.local/stateful-app:latest
+          imagePullPolicy: Never
+          envFrom:
+            - secretRef:
+                name: docker-secret
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /app
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              cp -r /tmp/private/ /app
+              cp -r /tmp/public/ /app
+              cd /app/private/app
+              composer config -g github-oauth.github.com "${GITHUB_TOKEN}"
+              composer update --optimize-autoloader --no-interaction
+      containers:
+        - name: php-fpm
+          image: registry.local/stateful-app:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 9000
+          envFrom:
+            - secretRef:
+                name: docker-secret
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /app
+            - name: env-volume
+              mountPath: /app/private/app/.env
+              subPath: .env
+              readOnly: true
+            - name: htaccess-volume
+              mountPath: /app/public/.htaccess
+              subPath: .htaccess
+      volumes:
+        - name: shared-volume
+          persistentVolumeClaim:
+            claimName: shared-pvc
+        - name: env-volume
+          secret:
+            secretName: app-secret
+            items:
+              - key: .env
+                path: .env
+        - name: htaccess-volume
+          configMap:
+            name: configmap
+            items:
+              - key: .htaccess
+                path: .htaccess

@@ -1,0 +1,7 @@
+runtime: php82
+
+default_expiration: 0
+
+handlers:
+- url: .*
+  script: auto

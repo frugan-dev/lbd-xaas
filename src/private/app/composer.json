@@ -1,0 +1,20 @@
+{
+    "require": {
+        "kint-php/kint": "^5.1",
+        "slim/psr7": "^1.6",
+        "slim/slim": "^4.0",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "config": {
+        "platform": {
+            "php": "8.3"
+        },
+        "platform-check": false,
+        "sort-packages": true
+    },
+    "scripts": {
+        "gcp-build": [
+            "composer install"
+        ]
+    }
+}
