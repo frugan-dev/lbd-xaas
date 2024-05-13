@@ -176,6 +176,7 @@
 #### quotas and limits
 
 - https://cloud.google.com/appengine/docs/standard/quotas
+- https://cloud.google.com/appengine/docs/flexible/quotas
 
 > File predefiniti per app: 10.000
 
@@ -268,6 +269,10 @@
 
 ## Cloud Run
 
+#### local develop
+
+- https://cloud.google.com/code/docs/vscode/develop-service
+
 #### Cloud Run vs App Engine
 
 - https://medium.com/google-cloud/cloud-run-vs-app-engine-whats-the-lowest-cost-6c82b874ed61
@@ -309,6 +314,12 @@
 - https://alperenbayramoglu2.medium.com/simple-comparison-of-lightweight-k8s-implementations-7c07c4e6e95f
 
 ## K8s
+
+#### providers
+
+- https://em360tech.com/top-10/top-10-managed-kubernetes-providers-2023
+- https://www.cncf.io/training/certification/kcsp/
+- https://collabnix.github.io/kubetools/
 
 #### LAMP
 
@@ -573,14 +584,19 @@
 - https://coffeeaddict.dev/how-to-manage-dotfiles-with-git-bare-repo/
 - https://www.saintsjd.com/2011/01/what-is-a-bare-git-repository/
 
-#### CI/CD
+#### IaC, CI/CD
 
+- https://blog.sparkfabrik.com/it/infrastructure-as-code-cosa-e-vantaggi
 - https://www.redhat.com/en/topics/devops/what-is-ci-cd
 - https://docs.gitlab.com/ee/ci/
 - https://buildpacks.io/
 - https://en.wikipedia.org/wiki/Test-driven_development
 - https://katalon.com/resources-center/blog/ci-cd-tools
 - https://medium.com/@diego.coder/introducci%C3%B3n-a-ci-cd-be79d0beafad
+
+#### SRE
+
+- https://blog.sparkfabrik.com/it/guides/sre-cos-e-vantaggi
 
 #### Microservices
 
